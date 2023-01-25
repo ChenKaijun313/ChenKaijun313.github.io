@@ -27,6 +27,7 @@ public static SqlSession getSqlSession(SqlSessionFactory sessionFactory, Executo
             return session;
         }
     }
+```
 
 ···java
  private static void registerSessionHolder(SqlSessionFactory sessionFactory, ExecutorType executorType, PersistenceExceptionTranslator exceptionTranslator, SqlSession session) {
@@ -57,3 +58,4 @@ public static SqlSession getSqlSession(SqlSessionFactory sessionFactory, Executo
         }
 
     }
+```
