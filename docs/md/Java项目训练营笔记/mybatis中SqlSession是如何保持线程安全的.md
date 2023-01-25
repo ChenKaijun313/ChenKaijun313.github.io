@@ -2,15 +2,15 @@
 
 本质上是使用了ThreadLocal
 
-MapperFactoryBean继承了SqlSessionDaoSupport
-Spring中的sqlSession变成了SqlSessionTemplate对象
+MapperFactoryBean继承了SqlSessionDaoSupport Spring中的sqlSession变成了SqlSessionTemplate对象
 Mybatis中的SqlSessionTemplate继承了SqlSession
 
 SqlSessionTemplate使用了jdk动态代理
 
 SqlSessionTemplate中的内部类SqlSessionInterceptor
-```java
-public static SqlSession getSqlSession(SqlSessionFactory sessionFactory, ExecutorType executorType, PersistenceExceptionTranslator exceptionTranslator) {
+
+```
+    public static SqlSession getSqlSession(SqlSessionFactory sessionFactory, ExecutorType executorType, PersistenceExceptionTranslator exceptionTranslator) {
         Assert.notNull(sessionFactory, "No SqlSessionFactory specified");
         Assert.notNull(executorType, "No ExecutorType specified");
         SqlSessionHolder holder = (SqlSessionHolder)TransactionSynchronizationManager.getResource(sessionFactory);
@@ -29,8 +29,8 @@ public static SqlSession getSqlSession(SqlSessionFactory sessionFactory, Executo
     }
 ```
 
-···java
- private static void registerSessionHolder(SqlSessionFactory sessionFactory, ExecutorType executorType, PersistenceExceptionTranslator exceptionTranslator, SqlSession session) {
+```
+    private static void registerSessionHolder(SqlSessionFactory sessionFactory, ExecutorType executorType, PersistenceExceptionTranslator exceptionTranslator, SqlSession session) {
         if (TransactionSynchronizationManager.isSynchronizationActive()) {
             Environment environment = sessionFactory.getConfiguration().getEnvironment();
             if (environment.getTransactionFactory() instanceof SpringManagedTransactionFactory) {
@@ -40,7 +40,6 @@ public static SqlSession getSqlSession(SqlSessionFactory sessionFactory, Executo
 
                 SqlSessionHolder holder = new SqlSessionHolder(session, executorType, exceptionTranslator);
                 TransactionSynchronizationManager.bindResource(sessionFactory, holder);
-                // 保证了线程安全
                 TransactionSynchronizationManager.registerSynchronization(new SqlSessionUtils.SqlSessionSynchronization(holder, sessionFactory));
                 holder.setSynchronizedWithTransaction(true);
                 holder.requested();
