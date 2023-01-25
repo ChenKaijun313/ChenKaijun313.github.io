@@ -5,5 +5,6 @@
    
        - [Week-1 AOP](/md/Java项目训练营笔记/AOP.md)
        - [Week-1 jdbcTemplate](/md/Java项目训练营笔记/jdbcTemplate.md)
+       - [Week-1 SqlSession是如何保持线程安全](/md/Java项目训练营笔记/mybatis中SqlSession是如何保持线程安全的.md)
        - [Week-1 作业](/md/Java项目训练营笔记/week1作业.md)
    
